@@ -24,66 +24,69 @@ document.querySelectorAll(".chk-mini-card").forEach(function(card) {
 });
 
 // 커스텀 프로그레스 바
-const bar = document.querySelector(".progress-bar");
-const handle = document.querySelector(".progress-handle");
-const count = document.querySelector(".progress-count");
-const fill = document.querySelector(".progress");
+const progressBarContainer = document.querySelectorAll(".progress-bar-container");
+progressBarContainer.forEach(container => {
+	const bar = container.querySelector(".progress-bar");
+	const handle = container.querySelector(".progress-handle");
+	const count = container.querySelector(".progress-count");
+	const fill = container.querySelector(".progress");
 
-const MIN = bar.getBoundingClientRect().left;
-const MAX = bar.getBoundingClientRect().left + bar.getBoundingClientRect().width;
+	const MIN = bar.getBoundingClientRect().left;
+	const MAX = bar.getBoundingClientRect().left + bar.getBoundingClientRect().width;
 
-const maxCnt = 20;
-const totalWidth = MAX - MIN;
-const spaceWidth = totalWidth / (maxCnt - 1);
-const marginLeft = getComputedStyle(document.querySelector(".progress-bar-container")).marginLeft.replace("px", "");
+	const maxCnt = 20;
+	const totalWidth = MAX - MIN;
+	const spaceWidth = totalWidth / (maxCnt - 1);
+	const marginLeft = getComputedStyle(container).marginLeft.replace("px", "");
 
-const handleGap = MIN - spaceWidth;
+	const handleGap = MIN - spaceWidth;
 
-let isDragging = false;
-let value = 0;
+	let isDragging = false;
+	let value = 0;
 
-function updateUI(val) {
-	value = Math.min(MAX, Math.max(MIN, val));
-	handle.style.left = Math.ceil((value - MIN) / spaceWidth) * spaceWidth + MIN - marginLeft + "px";
-	count.style.left = Math.ceil((value - MIN) / spaceWidth) * spaceWidth + MIN - marginLeft + "px";
-	count.textContent = Math.ceil((value - MIN) / spaceWidth) + 1;
-	fill.style.width = Math.ceil((value - MIN) / spaceWidth) * spaceWidth + "px";
-}
+	function updateUI(val) {
+		value = Math.min(MAX, Math.max(MIN, val));
+		handle.style.left = Math.ceil((value - MIN) / spaceWidth) * spaceWidth + MIN - marginLeft + "px";
+		count.style.left = Math.ceil((value - MIN) / spaceWidth) * spaceWidth + MIN - marginLeft + "px";
+		count.textContent = Math.ceil((value - MIN) / spaceWidth) + 1;
+		fill.style.width = Math.ceil((value - MIN) / spaceWidth) * spaceWidth + "px";
+	}
 
-function positionToValue(clientX) {
-	const rect = bar.getBoundingClientRect();
-	const x = Math.min(Math.max(clientX - rect.left, 0), rect.width);
-	const ratio = x / rect.width;
-	return Math.round(ratio * (MAX - 1)) + 1;
-}
+	function positionToValue(clientX) {
+		const rect = bar.getBoundingClientRect();
+		const x = Math.min(Math.max(clientX - rect.left, 0), rect.width);
+		const ratio = x / rect.width;
+		return Math.round(ratio * (MAX - 1)) + 1;
+	}
 
-handle.addEventListener("mousedown", () => {
-	isDragging = true;
-	handle.style.cursor = "grabbing";
+	handle.addEventListener("mousedown", () => {
+		isDragging = true;
+		handle.style.cursor = "grabbing";
+	});
+
+	document.addEventListener("mousemove", (e) => {
+		if (!isDragging) return;
+		updateUI(positionToValue(e.clientX));
+	});
+
+	document.addEventListener("mouseup", () => {
+		isDragging = false;
+		handle.style.cursor = "grab";
+	});
+
+	/* 모바일 터치 */
+	handle.addEventListener("touchstart", () => {
+		isDragging = true;
+	});
+
+	document.addEventListener("touchmove", (e) => {
+		if (!isDragging) return;
+		updateUI(positionToValue(e.touches[0].clientX));
+	});
+
+	document.addEventListener("touchend", () => {
+		isDragging = false;
+	});
+
+	updateUI(MIN);
 });
-
-document.addEventListener("mousemove", (e) => {
-	if (!isDragging) return;
-	updateUI(positionToValue(e.clientX));
-});
-
-document.addEventListener("mouseup", () => {
-	isDragging = false;
-	handle.style.cursor = "grab";
-});
-
-/* 모바일 터치 */
-handle.addEventListener("touchstart", () => {
-	isDragging = true;
-});
-
-document.addEventListener("touchmove", (e) => {
-	if (!isDragging) return;
-	updateUI(positionToValue(e.touches[0].clientX));
-});
-
-document.addEventListener("touchend", () => {
-	isDragging = false;
-});
-
-updateUI(MIN);
