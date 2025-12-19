@@ -1,0 +1,181 @@
+/**
+ *	File Name			: main.css
+ *	File Description	: 메인 스타일시트
+ *
+ *	Date				Author					Description
+ *	--------------------------------------------------------------
+ *	2025. 12. 19.		김지성					 최초 작성
+ */
+
+@import url("https://fonts.googleapis.com/css2?family=Asta+Sans:wght@300..800&family=Do+Hyeon&family=Noto+Sans+KR:wght@100..900&display=swap");
+
+:root {
+	--primary-color: #6096ba;
+	--animation-on: 0.07s;
+	--animation-off: none;
+	--animation: var(--animation-on);
+}
+
+* {
+	box-sizing: border-box;
+	font-family: "Asta Sans", sans-serif;
+	font-optical-sizing: auto;
+	font-weight: 500;
+	font-style: normal;
+}
+
+body {
+	justify-content: center;
+	height: 100vh;
+	margin: 0;
+}
+
+.header nav {
+	display: flex;
+	align-content: center;
+	width: 100%;
+	height: 55px;
+	padding: 0px 40px;
+	background-color: #6c7e9a;
+}
+
+.header nav div {
+	display: flex;
+	justify-content: space-between;
+	width: 100%;
+	align-items: center;
+}
+
+.header nav .title {
+	color: white;
+	font-size: 22px;
+	font-weight: 800;
+	text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+}
+
+.header nav .menu {
+	color: white;
+	font-size: 16px;
+	font-weight: 600;
+	cursor: pointer;
+	text-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+.header nav .login {
+	justify-content: right;
+	color: white;
+	font-size: 16px;
+	font-weight: 600;
+	cursor: pointer;
+	text-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+.content {
+	width: 100%;
+	padding: 30px 50px;
+}
+
+.content .title {
+	font-size: 22px;
+	font-weight: 600;
+}
+
+.content .title::after {
+	content: "";
+	display: block;
+	width: 100%;
+	height: 2px;
+	margin: 8px 0px 16px 0px;
+	background-color: #000;
+}
+
+.content .sub-title {
+	margin: 30px 0px 10px 20px;
+	font-size: 18px;
+	font-weight: 600;
+}
+
+.content .content-box {
+	margin: 0px 20px;
+	padding: 10px;
+}
+
+.content .mini-card-container {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 15px;
+}
+
+.content .chk-mini-card {
+	display: flex;
+	align-items: center;
+	width: fit-content;
+	height: 55px;
+	background-color: white;
+	border: 1px solid lightgray;
+	border-radius: 10px;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+	cursor: pointer;
+	transition: var(--animation);
+	user-select: none;
+}
+
+.content .chk-mini-card .chk-box {
+	display: none;
+}
+
+.content .chk-mini-card .user-icon {
+	padding: 0px 12px;
+}
+
+.content .chk-mini-card .user-icon img {
+	width: 30px;
+	height: 30px;
+}
+
+.content .chk-mini-card .user-name {
+	font-size: 16px;
+	font-weight: 500;
+	padding-right: 16px;
+}
+
+.content .progress-bar-container {
+	margin: 0px 15px 30px 15px;
+}
+
+.content .progress-bar {
+	width: 100%;
+	height: 20px;
+	background-color: lightgray;
+	border-radius: 10px;
+	overflow: hidden;
+	user-select: none;
+}
+
+.content .progress-bar .progress-handle {
+	position: absolute;
+	width: 26px;
+	height: 26px;
+	background-color: white;
+	border-radius: 50%;
+	margin-top: -3px;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 1);
+	cursor: pointer;
+	transition: var(--animation);
+}
+
+.content .progress-bar .progress-count {
+	position: absolute;
+	width: 26px;
+	height: 26px;
+	border-radius: 50%;
+	margin-top: 30px;
+	text-align: center;
+	transition: var(--animation);
+}
+
+.content .progress-bar .progress {
+	height: 100%;
+	background-color: var(--primary-color);
+	transition: var(--animation);
+}
